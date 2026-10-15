@@ -1,0 +1,12 @@
+{
+  "name": "cloud-task-manager",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "build": "npm run build --workspaces --if-present"
+  }
+}
