@@ -25,3 +25,23 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK"
+
+      - name: Smoke test
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS "$APP_URL/api/health"; then exit 0; fi
+            sleep 10
+          done
+          exit 1
