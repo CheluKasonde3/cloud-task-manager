@@ -70,4 +70,22 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const id = parseId(req.params.id);
+  if (id === null) {
+    return res.status(400).json({ error: "Invalid task id" });
+  }
+
+  try {
+    const result = await pool.query("DELETE FROM tasks WHERE id = $1", [id]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+    res.status(204).send();
+  } catch (err) {
+    console.error("DELETE /api/tasks/:id failed:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 module.exports = router;
+
