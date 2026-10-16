@@ -15,4 +15,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  const { title, description } = req.body || {};
+
+  if (typeof title !== "string" || title.trim() === "") {
+    return res.status(400).json({ error: "Title is required" });
+  }
+  if (description !== undefined && description !== null && typeof description !== "string") {
+    return res.status(400).json({ error: "Description must be a string" });
+  }
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO tasks (title, description) VALUES ($1, $2) RETURNING id, title, description, completed, created_at",
+      [title.trim(), description ?? null]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("POST /api/tasks failed:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;
