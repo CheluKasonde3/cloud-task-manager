@@ -6,7 +6,7 @@
     "server"
   ],
   "scripts": {
-    "test": "node --test",
+    "test": "node --test --test-force-exit",
     "build": "npm run build --workspaces --if-present"
   }
 }
