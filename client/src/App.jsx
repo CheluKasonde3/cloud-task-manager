@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
-import { createTask as createTaskRequest, deleteAllTasks as deleteAllTasksRequest, deleteTask as deleteTaskRequest, getTasks, updateTask as updateTaskRequest } from "./api";
+import { createTask as createTaskRequest, deleteAllTasks as deleteAllTasksRequest, deleteTask as deleteTaskRequest, getTasks, isUsingMockApi, updateTask as updateTaskRequest } from "./api";
 
 const columns = [
   { status: "pending", label: "To do" },
@@ -145,6 +145,7 @@ export default function App() {
   const projects = [...new Set(tasks.map((task) => task.project).filter(Boolean))].sort();
   const openTasks = tasks.filter((task) => task.status !== "completed");
   const dueTasks = openTasks.filter((task) => task.dueDate && task.dueDate <= todayAsString());
+  const completedCount = tasks.filter((task) => task.status === "completed").length;
 
   function matchesFilters(task) {
     const query = search.trim().toLowerCase();
@@ -165,6 +166,9 @@ export default function App() {
         <div>
           <p className="eyebrow">YOUR WORKSPACE</p>
           <h1>Task Manager</h1>
+          <p className="counter">
+            {openTasks.length} open · {completedCount} completed
+          </p>
         </div>
         <button className="reminder-button" type="button" onClick={enableReminders}>
           Enable browser reminders
@@ -290,6 +294,11 @@ export default function App() {
           </section>
         </>
       )}
+      <p className="storage-note">
+        {isUsingMockApi
+          ? "Using mock API responses saved in this browser. Set VITE_API_URL to connect a backend."
+          : ""}
+      </p>
     </main>
   );
 }

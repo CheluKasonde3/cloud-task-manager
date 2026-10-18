@@ -13,7 +13,7 @@ async function request(path, options = {}) {
     });
   } catch (err) {
     if (err instanceof TypeError) {
-      throw new Error("Couldn't reach the task API. Check that the server is running and VITE_API_URL is correct.");
+      throw new Error("Couldn't reach the task API. Check that the server is running and VITE_API_URL is correct.", { cause: err });
     }
     throw err;
   }
