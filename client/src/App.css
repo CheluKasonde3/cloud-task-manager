@@ -201,6 +201,18 @@ input:focus, textarea:focus, select:focus { border-color: #292929; outline-color
 .field-error { color: #252525; }
 .storage-note { color: #bcbcbc; }
 
+.task-list { padding: 0; margin: 0; list-style: none; }
+.task { display: flex; align-items: flex-start; gap: 0.8rem; padding: 1rem; border: 1px solid #666; border-radius: 4px; background: #303030; box-shadow: 4px 4px 0 #0005; }
+.task + .task { margin-top: 0.7rem; }
+.task > input[type="checkbox"] { width: 1.1rem; height: 1.1rem; flex: none; margin: 0.15rem 0 0; accent-color: #777; }
+.task-text { display: grid; flex: 1; gap: 0.35rem; min-width: 0; }
+.task-text strong { overflow-wrap: anywhere; }
+.task-text span { color: #bbb; font-size: 0.88rem; overflow-wrap: anywhere; }
+.task-text .task-status { color: #d0d0d0; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.task.done .task-text strong { color: #aaa; text-decoration: line-through; }
+.delete { flex: none; border: 1px solid #aaa; border-radius: 3px; background: #3a3a3a; color: white; padding: 0.4rem 0.65rem; }
+.delete:hover { background: #111; }
+
 @media (max-width: 600px) {
   .page-header { min-height: 250px; padding: 1.5rem; }
   .page-header::before { right: -14rem; }
