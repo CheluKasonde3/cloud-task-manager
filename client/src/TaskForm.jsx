@@ -21,6 +21,7 @@ export default function TaskForm({ onAdd }) {
     <form className="task-form" onSubmit={handleSubmit}>
       <input
         value={title}
+        required
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Task title (required)"
         aria-label="Task title"

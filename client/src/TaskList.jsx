@@ -18,8 +18,9 @@ export default function TaskList({ tasks, onToggle, onDelete }) {
           <div className="task-text">
             <strong>{task.title}</strong>
             {task.description && <span>{task.description}</span>}
+            <span className="task-status">{task.completed ? "Completed" : "Incomplete"}</span>
           </div>
-          <button className="delete" onClick={() => onDelete(task)}>
+          <button className="delete" type="button" onClick={() => onDelete(task.id)}>
             Delete
           </button>
         </li>

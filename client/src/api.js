@@ -49,7 +49,7 @@ export async function getTasks() {
 export async function createTask(task) {
   if (isUsingMockApi) {
     const tasks = loadTasks();
-    const created = { ...task, id: crypto.randomUUID() };
+    const created = normalizeTask({ ...task, id: crypto.randomUUID(), completed: false, created_at: new Date().toISOString() });
     saveTasks([created, ...tasks]);
     return created;
   }
@@ -69,7 +69,7 @@ export async function updateTask(id, updates) {
     const index = tasks.findIndex((task) => task.id === id);
     if (index < 0) throw new Error("Task not found.");
 
-    const updated = { ...tasks[index], ...updates };
+    const updated = normalizeTask({ ...tasks[index], ...updates });
     tasks[index] = updated;
     saveTasks(tasks);
     return updated;
