@@ -9,7 +9,7 @@ const app = express();
 app.use(cors({ origin: process.env.FRONTEND_ORIGIN || false }));
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("Task Manager API is running (V2)"));
+app.get("/", (req, res) => res.send("Task Manager API is running"));
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 app.use("/api/tasks", tasksRouter);
 
